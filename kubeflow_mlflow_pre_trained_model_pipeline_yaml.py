@@ -130,7 +130,7 @@ def train_from_csv(
 
 @partial(
     create_component_from_func,
-    packages_to_install=["dill", "pandas", "scikit-learn", "mlflow", "boto3"],
+    packages_to_install=["dill", "pandas", "scikit-learn", "mlflow", "boto3", "tqdm", ],
 )
 def upload_sklearn_model_to_mlflow(
         model_name: str,
