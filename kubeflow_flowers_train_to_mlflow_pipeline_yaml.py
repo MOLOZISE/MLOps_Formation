@@ -57,9 +57,9 @@ from kfp.dsl import pipeline
 
 @partial(
     create_component_from_func,
-    packages_to_install=["pandas", "tensorflow", "keras"],
+    packages_to_install=["tflite-model-maker", "numpy"],
 )
-def load_mnist_data( # gan data path
+def load_flower_data( # gan data path
         data_path: OutputPath("csv"),
         target_path: OutputPath("csv"),
 ):
@@ -74,14 +74,22 @@ def load_mnist_data( # gan data path
     os.environ["AWS_SECRET_ACCESS_KEY"] = "minio123"
 
     # minio내 mlflow 폴더
+    # flowers = pd.read_csv("flowers.csv")
+    # iris = load_iris()
+    #
+    # data = pd.DataFrame(flowers["data"], columns=iris["feature_names"])
+    # target = pd.DataFrame(flowers["target"], columns=["target"])
+    #
+    # data.to_csv(data_path, index=False)
+    # target.to_csv(target_path, index=False)
 
-    iris = load_iris()
+    data_path = tf.keras.utils.get_file(
+        'flower_photos',
+        'https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz',
+        untar=True)
 
-    data = pd.DataFrame(iris["data"], columns=iris["feature_names"])
-    target = pd.DataFrame(iris["target"], columns=["target"])
-
-    data.to_csv(data_path, index=False)
-    target.to_csv(target_path, index=False)
+    data = DataLoader.from_folder(data_path)
+    train_data, test_data = data.split(0.9)
 
 
 @partial(

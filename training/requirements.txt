@@ -1,0 +1,3 @@
+tensorflow==2.8
+cloudml-hypertune==0.1.0.dev6
+tensorflow_hub==0.12.0

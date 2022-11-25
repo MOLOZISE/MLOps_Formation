@@ -1,9 +1,6 @@
 from kfp.components import InputPath, OutputPath, create_component_from_func
 from functools import partial
 
-
-### Component 작성 csv -> 훈련
-
 @partial(
     create_component_from_func,
     packages_to_install=["dill==0.3.4", "pandas==1.3.4", "scikit-learn==1.0.1"],
@@ -28,11 +25,7 @@ def train_from_csv(
     with open(model_path, mode="wb") as file_writer:
         dill.dump(clf, file_writer)
 
-### 데이터 생성 컴포넌트
-
-
 from functools import partial
-
 from kfp.components import InputPath, OutputPath, create_component_from_func
 
 
